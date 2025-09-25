@@ -4,30 +4,86 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [todos, setTodos] = useState([]);
+  const [filter, setFilter] = useState("all");
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <h3>to-do-app</h3>
+      <Todomanager todos={todos} setTodos={setTodos} filter={filter} setFilter={setFilter} />
+      <Todolists todos={todos} setTodos={setTodos} filter={filter} setFilter={setFilter} />
+    </>
+  )
+}
+
+function Todomanager ({todos,setTodos,filter,setFilter}) {
+
+  const [title,setTitle] = useState("");
+
+  const btnhandler = () => {
+    setTodos([...todos, {
+      "id": Date.now(),
+      "title": title,
+      "completed": false
+    }]);
+    setTitle("");
+  }
+
+  return(
+    <>
+    <div>
+      <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} placeholder='タスクを追加...'/>
+      <button onClick={() => btnhandler()}>追加</button>
+    </div>
+    <div>
+      <input type="radio" value="all" name="filter" checked={filter === "all"} onChange={() => setFilter("all")}/> 全て
+      <input type="radio" value="uncompleted" name="filter" checked={filter === "uncompleted"} onChange={() => setFilter("uncompleted")}/> 未達成
+      <input type="radio" value="completed" name="filter" checked={filter === "completed"} onChange={() => setFilter("completed")}/> 達成済
+    </div>
+    </>
+  )
+}
+
+function Todolists ({todos,setTodos,filter,setFilter}) {
+
+  const filteredTodos = todos.filter((todo) => {
+    if(filter === "all") return true;
+    else if(filter === "uncompleted") return !todo.completed;
+    else if(filter === "completed") return todo.completed;
+    else false;
+  })
+
+  const togglecompleted = (id) => {
+    const newtodos = todos.map((todo) => {
+      if(todo.id === id) return {...todo, "completed": !todo.completed};
+      else return todo;
+    });
+    setTodos(newtodos);
+  }
+
+  const deletehandle = (id) => {
+    const newtodos = todos.filter(todo => id !== todo.id);
+    setTodos(newtodos);
+  }
+
+  return(
+    <div>
+      <ul>
+        {filteredTodos.map((todo) => <Todo todo={todo} togglecompleted={togglecompleted} deletehandle={deletehandle} />)}
+      </ul>
+    </div>
+  )
+}
+
+function Todo ({todo,togglecompleted,deletehandle}) {
+
+  return(
+    <>
+          <li key={todo.id}>
+          <span onClick={() => togglecompleted(todo.id)} 
+          style={{textDecoration: todo.completed ? "line-through" : "none"}}>{todo.title}</span>
+          <button onClick={() => deletehandle(todo.id)}>削除</button>
+          </li>
     </>
   )
 }
