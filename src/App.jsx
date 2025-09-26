@@ -19,6 +19,7 @@ function Todomanager ({todos,setTodos,filter,setFilter}) {
   const [title,setTitle] = useState("");
 
   const addhandler = () => {
+    if(title === "") return;
     setTodos([...todos, {
       "id": Date.now(),
       "title": title,
