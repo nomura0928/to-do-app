@@ -23,7 +23,8 @@ function Todomanager ({todos,setTodos,filter,setFilter}) {
     setTodos([...todos, {
       "id": Date.now(),
       "title": title,
-      "completed": false
+      "completed": false,
+      "editnow": false
     }]);
     setTitle("");
   }
@@ -45,7 +46,7 @@ function Todomanager ({todos,setTodos,filter,setFilter}) {
   )
 }
 
-function Todolists ({todos,setTodos,filter,setFilter}) {
+function Todolists ({todos,setTodos,filter}) {
 
   const filteredTodos = todos.filter((todo) => {
     if(filter === "all") return true;
@@ -67,23 +68,56 @@ function Todolists ({todos,setTodos,filter,setFilter}) {
     setTodos(newtodos);
   }
 
+  const edithandler = (id) => {
+    const newtodos = todos.map((todo) => {
+      if(todo.id === id) return {...todo, "editnow": true};
+      else return todo;
+    });
+    setTodos(newtodos);
+  }
+
   return(
     <div>
       <ul>
-        {filteredTodos.map((todo) => <Todo todo={todo} togglecompleted={togglecompleted} deletehandle={deletehandle} />)}
+        {filteredTodos.map((todo) => <Todo todo={todo} togglecompleted={togglecompleted} deletehandle={deletehandle} 
+        edithandler={edithandler} todos={todos} setTodos={setTodos}/>)}
       </ul>
     </div>
   )
 }
 
-function Todo ({todo,togglecompleted,deletehandle}) {
+function Todo ({todo,togglecompleted,deletehandle,edithandler,todos,setTodos}) {
+
+  const [newtitle,setNewtitle] = useState(todo.title);
+
+  const confirmEdit = (id) => {
+    const newtodos = todos.map((todo) => {
+      if(todo.id === id) return {...todo, "editnow": false, "title": newtitle};
+      else return todo;
+    });
+    setTodos(newtodos);
+  }
+
+  let content;
+  if (todo.editnow) {
+    content = <input type="text" value={newtitle}
+     onChange={(e) => setNewtitle(e.target.value)} onKeyDown={(e) => {
+      if(e.key === "Enter") confirmEdit(todo.id);
+     }}
+     />;
+  } else {
+    content = <span onClick={() => togglecompleted(todo.id)} 
+              style={{textDecoration: todo.completed ? "line-through" : "none"}}>
+              {todo.title}
+            </span>;
+  }
 
   return(
     <>
           <li key={todo.id}>
-          <span onClick={() => togglecompleted(todo.id)} 
-          style={{textDecoration: todo.completed ? "line-through" : "none"}}>{todo.title}</span>
+          {content}
           <button onClick={() => deletehandle(todo.id)}>削除</button>
+          <button onClick={() => edithandler(todo.id)}>編集</button>
           </li>
     </>
   )
