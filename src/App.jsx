@@ -18,7 +18,7 @@ function Todomanager ({todos,setTodos,filter,setFilter}) {
 
   const [title,setTitle] = useState("");
 
-  const btnhandler = () => {
+  const addhandler = () => {
     setTodos([...todos, {
       "id": Date.now(),
       "title": title,
@@ -30,8 +30,10 @@ function Todomanager ({todos,setTodos,filter,setFilter}) {
   return(
     <>
     <div>
-      <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} placeholder='タスクを追加...'/>
-      <button onClick={() => btnhandler()}>追加</button>
+      <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} placeholder='タスクを追加...' onKeyDown={(e) => {
+        if (e.key === "Enter") addhandler();
+      }}/>
+      <button onClick={() => addhandler()}>追加</button>
     </div>
     <div>
       <input type="radio" value="all" name="filter" checked={filter === "all"} onChange={() => setFilter("all")}/> 全て
