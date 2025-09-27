@@ -29,6 +29,11 @@ function Todomanager ({todos,setTodos,filter,setFilter}) {
     setTitle("");
   }
 
+  const deleteCompleted = () => {
+    const newtodos = todos.filter((todo) => !todo.completed);
+    setTodos(newtodos);
+  }
+
   return(
     <>
     <div>
@@ -41,6 +46,10 @@ function Todomanager ({todos,setTodos,filter,setFilter}) {
       <input type="radio" value="all" name="filter" checked={filter === "all"} onChange={() => setFilter("all")}/> 全て
       <input type="radio" value="uncompleted" name="filter" checked={filter === "uncompleted"} onChange={() => setFilter("uncompleted")}/> 未達成
       <input type="radio" value="completed" name="filter" checked={filter === "completed"} onChange={() => setFilter("completed")}/> 達成済
+    </div>
+    <div>
+      <button onClick={() => deleteCompleted()}>達成済を削除</button>
+      <button onClick={() => setTodos([])}>全て削除</button>
     </div>
     </>
   )
