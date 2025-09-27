@@ -48,6 +48,14 @@ function Todomanager ({todos,setTodos,filter,setFilter}) {
 
 function Todolists ({todos,setTodos,filter}) {
 
+  const updateTodos = (id,title,completed,editnow) => {
+     const newtodos = todos.map((todo) => {
+      if(todo.id === id) return {...todo, "title": title, "completed": completed, "editnow": editnow};
+      else return todo;
+    });
+    setTodos(newtodos);
+  }
+
   const filteredTodos = todos.filter((todo) => {
     if(filter === "all") return true;
     else if(filter === "uncompleted") return !todo.completed;
@@ -55,58 +63,34 @@ function Todolists ({todos,setTodos,filter}) {
     else false;
   })
 
-  const togglecompleted = (id) => {
-    const newtodos = todos.map((todo) => {
-      if(todo.id === id) return {...todo, "completed": !todo.completed};
-      else return todo;
-    });
-    setTodos(newtodos);
-  }
-
   const deletehandle = (id) => {
     const newtodos = todos.filter(todo => id !== todo.id);
-    setTodos(newtodos);
-  }
-
-  const edithandler = (id) => {
-    const newtodos = todos.map((todo) => {
-      if(todo.id === id) return {...todo, "editnow": true};
-      else return todo;
-    });
     setTodos(newtodos);
   }
 
   return(
     <div>
       <ul>
-        {filteredTodos.map((todo) => <Todo todo={todo} togglecompleted={togglecompleted} deletehandle={deletehandle} 
-        edithandler={edithandler} todos={todos} setTodos={setTodos}/>)}
+        {filteredTodos.map((todo) => <Todo todo={todo} updateTodos={updateTodos} deletehandle={deletehandle} 
+         todos={todos} setTodos={setTodos}/>)}
       </ul>
-    </div>
+    </div> 
   )
 }
 
-function Todo ({todo,togglecompleted,deletehandle,edithandler,todos,setTodos}) {
+function Todo ({todo,updateTodos,deletehandle,edithandler,todos,setTodos}) {
 
   const [newtitle,setNewtitle] = useState(todo.title);
-
-  const confirmEdit = (id) => {
-    const newtodos = todos.map((todo) => {
-      if(todo.id === id) return {...todo, "editnow": false, "title": newtitle};
-      else return todo;
-    });
-    setTodos(newtodos);
-  }
 
   let content;
   if (todo.editnow) {
     content = <input type="text" value={newtitle}
      onChange={(e) => setNewtitle(e.target.value)} onKeyDown={(e) => {
-      if(e.key === "Enter") confirmEdit(todo.id);
+      if(e.key === "Enter") updateTodos(todo.id,newtitle,todo.completed,false);
      }}
      />;
   } else {
-    content = <span onClick={() => togglecompleted(todo.id)} 
+    content = <span onClick={() => updateTodos(todo.id,todo.title,!todo.completed,todo.editnow)} 
               style={{textDecoration: todo.completed ? "line-through" : "none"}}>
               {todo.title}
             </span>;
@@ -117,7 +101,7 @@ function Todo ({todo,togglecompleted,deletehandle,edithandler,todos,setTodos}) {
           <li key={todo.id}>
           {content}
           <button onClick={() => deletehandle(todo.id)}>削除</button>
-          <button onClick={() => edithandler(todo.id)}>編集</button>
+          <button onClick={() => updateTodos(todo.id,todo.title,todo.completed,true)}>編集</button>
           </li>
     </>
   )
