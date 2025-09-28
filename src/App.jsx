@@ -100,7 +100,11 @@ function Todolists ({todos,setTodos,filter,urgencies}) {
 function Todo ({todo,updateTodos,deletehandle,urgencies}) {
 
   const [newtitle,setNewtitle] = useState(todo.title);
-  const [urgencyNum, setUrgencynum] = useState(0);
+  const [urgencyNum, setUrgencynum] = useState(() => {
+    if(todo.urgency === "high") return 2;
+    else if (todo.urgency === "medium") return 1;
+    else return 0;
+  });
 
   let content;
   if (todo.editnow) {
