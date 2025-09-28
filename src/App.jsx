@@ -129,6 +129,7 @@ function Todo ({todo,updateTodos,deletehandle,urgencies}) {
     content =<span>
       <input type="text" value={newtitle} onChange={(e) => setNewtitle(e.target.value)} />
       <button onClick={() => setUrgencynum((urgencyNum + 1)%3)}>{urgencies[urgencyNum].display}</button>
+      <button onClick={() => updateTodos(todo.id,newtitle,todo.completed,!todo.editnow,urgencies[urgencyNum].urgency)}>修正</button>
      </span>;
   } else {
     content = <span>
@@ -137,6 +138,7 @@ function Todo ({todo,updateTodos,deletehandle,urgencies}) {
               {todo.title}
       </span>
       <span>{new Date(todo.createdat).toLocaleDateString()}</span>
+      <button onClick={() => updateTodos(todo.id,newtitle,todo.completed,!todo.editnow,urgencies[urgencyNum].urgency)}>編集</button>
       <button onClick={() => deletehandle(todo.id)}>削除</button>
       </span>
   }
@@ -145,7 +147,6 @@ function Todo ({todo,updateTodos,deletehandle,urgencies}) {
     <>
           <li key={todo.id}>
           {content}
-          <button onClick={() => updateTodos(todo.id,todo.title,todo.completed,!todo.editnow,urgencies[urgencyNum].urgency)}>編集</button>
           </li>
     </>
   )
