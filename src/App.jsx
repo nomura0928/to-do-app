@@ -109,17 +109,19 @@ function Todo ({todo,updateTodos,deletehandle,urgencies}) {
       <button onClick={() => setUrgencynum((urgencyNum + 1)%3)}>{urgencies[urgencyNum].display}</button>
      </span>;
   } else {
-    content = <span onClick={() => updateTodos(todo.id,todo.title,!todo.completed,todo.editnow,todo.urgency)} 
+    content = <span>
+      <span onClick={() => updateTodos(todo.id,todo.title,!todo.completed,todo.editnow,todo.urgency)} 
               style={{textDecoration: todo.completed ? "line-through" : "none"}} className={todo.urgency}>
               {todo.title}
-            </span>;
+      </span>
+      <button onClick={() => deletehandle(todo.id)}>削除</button>
+      </span>
   }
 
   return(
     <>
           <li key={todo.id}>
           {content}
-          <button onClick={() => deletehandle(todo.id)}>削除</button>
           <button onClick={() => updateTodos(todo.id,todo.title,todo.completed,!todo.editnow,urgencies[urgencyNum].urgency)}>編集</button>
           </li>
     </>
