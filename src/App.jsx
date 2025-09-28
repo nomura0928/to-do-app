@@ -110,7 +110,7 @@ function Todo ({todo,updateTodos,deletehandle,edithandler,todos,setTodos}) {
           <li key={todo.id}>
           {content}
           <button onClick={() => deletehandle(todo.id)}>削除</button>
-          <button onClick={() => updateTodos(todo.id,todo.title,todo.completed,true)}>編集</button>
+          <button onClick={() => updateTodos(todo.id,todo.title,todo.completed,!todo.editnow)}>編集</button>
           </li>
     </>
   )
