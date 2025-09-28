@@ -30,7 +30,7 @@ function Todomanager ({todos,setTodos,filter,setFilter,urgencies}) {
       "id": Date.now(),
       "title": title,
       "completed": false,
-      "editnow": false, 
+      "editnow": false,
       "urgency" : urgencies[urgencyNum].urgency
     }]);
     setTitle("");
@@ -90,10 +90,10 @@ function Todolists ({todos,setTodos,filter,urgencies}) {
   return(
     <div>
       <ul>
-        {filteredTodos.map((todo) => <Todo todo={todo} updateTodos={updateTodos} deletehandle={deletehandle} 
+        {filteredTodos.map((todo) => <Todo todo={todo} updateTodos={updateTodos} deletehandle={deletehandle}
          todos={todos} setTodos={setTodos} urgencies={urgencies}/>)}
       </ul>
-    </div> 
+    </div>
   )
 }
 
@@ -114,7 +114,7 @@ function Todo ({todo,updateTodos,deletehandle,urgencies}) {
      </span>;
   } else {
     content = <span>
-      <span onClick={() => updateTodos(todo.id,todo.title,!todo.completed,todo.editnow,todo.urgency)} 
+      <span onClick={() => updateTodos(todo.id,todo.title,!todo.completed,todo.editnow,todo.urgency)}
               style={{textDecoration: todo.completed ? "line-through" : "none"}} className={todo.urgency}>
               {todo.title}
       </span>
