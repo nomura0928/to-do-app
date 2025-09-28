@@ -105,8 +105,7 @@ function Todo ({todo,updateTodos,deletehandle,urgencies}) {
   let content;
   if (todo.editnow) {
     content =<span>
-      <input type="text" value={newtitle} onChange={(e) => setNewtitle(e.target.value)} 
-      onKeyDown={(e) => { if(e.key === "Enter") updateTodos(todo.id,newtitle,todo.completed,false,urgencies[urgencyNum].urgency)}}/>
+      <input type="text" value={newtitle} onChange={(e) => setNewtitle(e.target.value)} />
       <button onClick={() => setUrgencynum((urgencyNum + 1)%3)}>{urgencies[urgencyNum].display}</button>
      </span>;
   } else {
