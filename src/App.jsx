@@ -5,16 +5,22 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("all");
 
+  const urgencies = [
+    {"urgency": "low", "display": "後で"},
+    {"urgency": "medium", "display": "なるべく"},
+    {"urgency": "high", "display": "今すぐ"}
+  ]
+
   return (
     <>
     <h3>to-do-app</h3>
-      <Todomanager todos={todos} setTodos={setTodos} filter={filter} setFilter={setFilter} />
-      <Todolists todos={todos} setTodos={setTodos} filter={filter} setFilter={setFilter} />
+      <Todomanager todos={todos} setTodos={setTodos} filter={filter} setFilter={setFilter} urgencies={urgencies} />
+      <Todolists todos={todos} setTodos={setTodos} filter={filter} setFilter={setFilter} urgencies={urgencies} />
     </>
   )
 }
 
-function Todomanager ({todos,setTodos,filter,setFilter}) {
+function Todomanager ({todos,setTodos,filter,setFilter,urgencies}) {
 
   const [title,setTitle] = useState("");
 
@@ -24,7 +30,8 @@ function Todomanager ({todos,setTodos,filter,setFilter}) {
       "id": Date.now(),
       "title": title,
       "completed": false,
-      "editnow": false
+      "editnow": false, 
+      "urgency" : urgencies[urgencyNum].urgency
     }]);
     setTitle("");
   }
@@ -34,12 +41,15 @@ function Todomanager ({todos,setTodos,filter,setFilter}) {
     setTodos(newtodos);
   }
 
+  const [urgencyNum, setUrgencynum] = useState(0);
+
   return(
     <>
     <div>
       <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} placeholder='タスクを追加...' onKeyDown={(e) => {
         if (e.key === "Enter") addhandler();
       }}/>
+      <button onClick={() => setUrgencynum((urgencyNum + 1)%3)}>{urgencies[urgencyNum].display}</button>
       <button onClick={() => addhandler()}>追加</button>
     </div>
     <div>
@@ -55,11 +65,11 @@ function Todomanager ({todos,setTodos,filter,setFilter}) {
   )
 }
 
-function Todolists ({todos,setTodos,filter}) {
+function Todolists ({todos,setTodos,filter,urgencies}) {
 
-  const updateTodos = (id,title,completed,editnow) => {
+  const updateTodos = (id,title,completed,editnow,urgency) => {
      const newtodos = todos.map((todo) => {
-      if(todo.id === id) return {...todo, "title": title, "completed": completed, "editnow": editnow};
+      if(todo.id === id) return {...todo, "title": title, "completed": completed, "editnow": editnow, "urgency": urgency};
       else return todo;
     });
     setTodos(newtodos);
@@ -81,26 +91,27 @@ function Todolists ({todos,setTodos,filter}) {
     <div>
       <ul>
         {filteredTodos.map((todo) => <Todo todo={todo} updateTodos={updateTodos} deletehandle={deletehandle} 
-         todos={todos} setTodos={setTodos}/>)}
+         todos={todos} setTodos={setTodos} urgencies={urgencies}/>)}
       </ul>
     </div> 
   )
 }
 
-function Todo ({todo,updateTodos,deletehandle,edithandler,todos,setTodos}) {
+function Todo ({todo,updateTodos,deletehandle,urgencies}) {
 
   const [newtitle,setNewtitle] = useState(todo.title);
+  const [urgencyNum, setUrgencynum] = useState(0);
 
   let content;
   if (todo.editnow) {
-    content = <input type="text" value={newtitle}
-     onChange={(e) => setNewtitle(e.target.value)} onKeyDown={(e) => {
-      if(e.key === "Enter") updateTodos(todo.id,newtitle,todo.completed,false);
-     }}
-     />;
+    content =<span>
+      <input type="text" value={newtitle} onChange={(e) => setNewtitle(e.target.value)} 
+      onKeyDown={(e) => { if(e.key === "Enter") updateTodos(todo.id,newtitle,todo.completed,false,urgencies[urgencyNum].urgency)}}/>
+      <button onClick={() => setUrgencynum((urgencyNum + 1)%3)}>{urgencies[urgencyNum].display}</button>
+     </span>;
   } else {
-    content = <span onClick={() => updateTodos(todo.id,todo.title,!todo.completed,todo.editnow)} 
-              style={{textDecoration: todo.completed ? "line-through" : "none"}}>
+    content = <span onClick={() => updateTodos(todo.id,todo.title,!todo.completed,todo.editnow,todo.urgency)} 
+              style={{textDecoration: todo.completed ? "line-through" : "none"}} className={todo.urgency}>
               {todo.title}
             </span>;
   }
@@ -110,7 +121,7 @@ function Todo ({todo,updateTodos,deletehandle,edithandler,todos,setTodos}) {
           <li key={todo.id}>
           {content}
           <button onClick={() => deletehandle(todo.id)}>削除</button>
-          <button onClick={() => updateTodos(todo.id,todo.title,todo.completed,!todo.editnow)}>編集</button>
+          <button onClick={() => updateTodos(todo.id,todo.title,todo.completed,!todo.editnow,urgencies[urgencyNum].urgency)}>編集</button>
           </li>
     </>
   )

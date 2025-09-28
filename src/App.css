@@ -1,0 +1,11 @@
+.high {
+    color: red;
+}
+
+.medium {
+    color: yellow;
+}
+
+.low {
+    color: rgb(119, 252, 30);
+}
