@@ -4,6 +4,7 @@ import './App.css'
 function App() {
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("all");
+  const [sort, setSort] = useState("time");
 
   const urgencies = [
     {"urgency": "low", "display": "後で"},
@@ -14,13 +15,13 @@ function App() {
   return (
     <>
     <h3>to-do-app</h3>
-      <Todomanager todos={todos} setTodos={setTodos} filter={filter} setFilter={setFilter} urgencies={urgencies} />
-      <Todolists todos={todos} setTodos={setTodos} filter={filter} setFilter={setFilter} urgencies={urgencies} />
+      <Todomanager todos={todos} setTodos={setTodos} filter={filter} setFilter={setFilter} urgencies={urgencies} sort={sort} setSort={setSort} />
+      <Todolists todos={todos} setTodos={setTodos} filter={filter} setFilter={setFilter} urgencies={urgencies} sort={sort} />
     </>
   )
 }
 
-function Todomanager ({todos,setTodos,filter,setFilter,urgencies}) {
+function Todomanager ({todos,setTodos,filter,setFilter,urgencies,sort,setSort}) {
 
   const [title,setTitle] = useState("");
 
@@ -31,7 +32,8 @@ function Todomanager ({todos,setTodos,filter,setFilter,urgencies}) {
       "title": title,
       "completed": false,
       "editnow": false,
-      "urgency" : urgencies[urgencyNum].urgency
+      "urgency": urgencies[urgencyNum].urgency,
+      "createdat": new Date()
     }]);
     setTitle("");
   }
@@ -58,6 +60,10 @@ function Todomanager ({todos,setTodos,filter,setFilter,urgencies}) {
       <input type="radio" value="completed" name="filter" checked={filter === "completed"} onChange={() => setFilter("completed")}/> 達成済
     </div>
     <div>
+      <input type="radio" name="sort" value="time" checked={sort === "time"} onChange={() => setSort("time")} />時間順
+      <input type="radio" name="sort" value="urgency" checked={sort === "urgency"} onChange={() => setSort("urgency")} />緊急度順
+    </div>
+    <div>
       <button onClick={() => deleteCompleted()}>達成済を削除</button>
       <button onClick={() => setTodos([])}>全て削除</button>
     </div>
@@ -65,7 +71,7 @@ function Todomanager ({todos,setTodos,filter,setFilter,urgencies}) {
   )
 }
 
-function Todolists ({todos,setTodos,filter,urgencies}) {
+function Todolists ({todos,setTodos,filter,urgencies,sort}) {
 
   const updateTodos = (id,title,completed,editnow,urgency) => {
      const newtodos = todos.map((todo) => {
@@ -75,7 +81,19 @@ function Todolists ({todos,setTodos,filter,urgencies}) {
     setTodos(newtodos);
   }
 
-  const filteredTodos = todos.filter((todo) => {
+  const getUrgencyValue = (urgency) => {
+    if (urgency === "high") return 3;
+    if (urgency === "medium") return 2;
+    if (urgency === "low") return 1;
+    return 0;
+  }
+
+  const sortedTodos = [...todos].sort((a,b) => {
+    if(sort === "time") return a.createdat-b.createdat;
+    else return getUrgencyValue(b.urgency)-getUrgencyValue(a.urgency);
+  })
+
+  const filteredTodos = sortedTodos.filter((todo) => {
     if(filter === "all") return true;
     else if(filter === "uncompleted") return !todo.completed;
     else if(filter === "completed") return todo.completed;
@@ -118,6 +136,7 @@ function Todo ({todo,updateTodos,deletehandle,urgencies}) {
               style={{textDecoration: todo.completed ? "line-through" : "none"}} className={todo.urgency}>
               {todo.title}
       </span>
+      <span>{new Date(todo.createdat).toLocaleDateString()}</span>
       <button onClick={() => deletehandle(todo.id)}>削除</button>
       </span>
   }
