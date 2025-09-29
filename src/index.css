@@ -1,9 +1,16 @@
 body {
-background-color: #202124;
+    background-color: #202124;
     color: #E8EAED;
 }
 
 input {
-    background-color: rgb(32, 33, 36);
-    color: aliceblue;
+    background-color: rgb(52, 51, 57);
+    border-radius: 0.25rem;
+    border: 1px solid rgb(211, 203, 245);
+    color: #E8EAED;
+    outline: none;
+}
+
+input:focus {
+    border: 1.5px solid rgb(138, 138, 248);
 }

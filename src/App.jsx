@@ -48,7 +48,7 @@ function Todomanager ({todos,setTodos,filter,setFilter,urgencies,sort,setSort}) 
   return(
     <>
     <div>
-      <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} placeholder='タスクを追加...' onKeyDown={(e) => {
+      <input type="text" className='input' onChange={(e) => setTitle(e.target.value)} value={title} placeholder='タスクを追加...' onKeyDown={(e) => {
         if (e.key === "Enter") addhandler();
       }}/>
       <button onClick={() => setUrgencynum((urgencyNum + 1)%3)}>{urgencies[urgencyNum].display}</button>
