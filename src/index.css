@@ -1,4 +1,9 @@
 body {
+background-color: #202124;
+    color: #E8EAED;
+}
+
+input {
     background-color: rgb(32, 33, 36);
     color: aliceblue;
 }
