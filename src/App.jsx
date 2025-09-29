@@ -145,9 +145,9 @@ function Todo ({todo,updateTodos,deletehandle,urgencies}) {
 
   return(
     <>
-          <li>
-          {content}
-          </li>
+      <li>
+        {content}
+      </li>
     </>
   )
 }
