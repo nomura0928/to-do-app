@@ -108,7 +108,7 @@ function Todolists ({todos,setTodos,filter,urgencies,sort}) {
   return(
     <div>
       <ul>
-        {filteredTodos.map((todo) => <Todo todo={todo} updateTodos={updateTodos} deletehandle={deletehandle}
+        {filteredTodos.map((todo) => <Todo key={todo.id} todo={todo} updateTodos={updateTodos} deletehandle={deletehandle}
          todos={todos} setTodos={setTodos} urgencies={urgencies}/>)}
       </ul>
     </div>
@@ -145,7 +145,7 @@ function Todo ({todo,updateTodos,deletehandle,urgencies}) {
 
   return(
     <>
-          <li key={todo.id}>
+          <li>
           {content}
           </li>
     </>
