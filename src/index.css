@@ -14,3 +14,22 @@ input {
 input:focus {
     border: 1.5px solid rgb(138, 138, 248);
 }
+
+button {
+    background-color: rgb(55, 53, 65);
+    color: #E8EAED;
+    border: 1px solid rgb(80, 80, 90);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+button:hover {
+    background-color: rgb(65, 62, 75);
+    border-color: rgb(72, 72, 147);
+}
+
+button:active {
+    background-color: rgb(52, 50, 63);
+    border-color: rgb(83, 83, 156);
+}
