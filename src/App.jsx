@@ -51,7 +51,7 @@ function Todomanager ({todos,setTodos,filter,setFilter,urgencies,sort,setSort}) 
       <input type="text" className='input' onChange={(e) => setTitle(e.target.value)} value={title} placeholder='タスクを追加...' onKeyDown={(e) => {
         if (e.key === "Enter") addhandler();
       }}/>
-      <button onClick={() => setUrgencynum((urgencyNum + 1)%3)}>{urgencies[urgencyNum].display}</button>
+      <button onClick={() => setUrgencynum((urgencyNum + 1)%3)} className={`urgency ${urgencies[urgencyNum].urgency}`}>{urgencies[urgencyNum].display}</button>
       <button onClick={() => addhandler()}>追加</button>
     </div>
     <div>
@@ -128,7 +128,7 @@ function Todo ({todo,updateTodos,deletehandle,urgencies}) {
   if (todo.editnow) {
     content =<span>
       <input type="text" value={newtitle} onChange={(e) => setNewtitle(e.target.value)} />
-      <button onClick={() => setUrgencynum((urgencyNum + 1)%3)}>{urgencies[urgencyNum].display}</button>
+      <button onClick={() => setUrgencynum((urgencyNum + 1)%3)} className={`urgency ${urgencies[urgencyNum].urgency}`}>{urgencies[urgencyNum].display}</button>
       <button onClick={() => updateTodos(todo.id,newtitle,todo.completed,!todo.editnow,urgencies[urgencyNum].urgency)}>修正</button>
      </span>;
   } else {

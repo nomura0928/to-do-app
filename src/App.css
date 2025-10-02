@@ -9,3 +9,45 @@
 .low {
     color: rgb(119, 252, 30);
 }
+
+/* 緊急度ボタン共通スタイル */
+button.urgency {
+    width: 4.5rem;
+    /* padding: 0.4rem; */
+    border-radius: 0.4rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+/* 低緊急度 - 緑系 */
+button.low {
+    background-color: #4a7c29;
+    border: 1px solid #5a8f35;
+    color: #e8f5e8;
+}
+
+button.low:hover {
+    background-color: #579130;
+}
+
+/* 中緊急度 - オレンジ系 */
+button.medium {
+    background-color: #cd853f;
+    border: 1px solid #daa520;
+    color: #cbc5b8;
+}
+
+button.medium:hover {
+    background-color: #da944f;
+}
+
+/* 高緊急度 - 赤系 */
+button.high {
+    background-color: #dc143c;
+    border: 1px solid #ff6b6b;
+    color: #ffe4e1;
+}
+
+button.high:hover {
+    background-color: #ff1744;
+}
