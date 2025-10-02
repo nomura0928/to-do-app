@@ -22,11 +22,13 @@ button {
     border-radius: 0.25rem;
     cursor: pointer;
     font-size: 0.9rem;
+    transition: all 0.2s ease;
 }
 
 button:hover {
     background-color: rgb(65, 62, 75);
     border-color: rgb(72, 72, 147);
+    transform: scale(1.02);
 }
 
 button:active {
