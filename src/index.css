@@ -3,10 +3,11 @@ body {
     color: #E8EAED;
 }
 
-input {
+input[type="text"] {
     background-color: rgb(52, 51, 57);
     border-radius: 0.25rem;
-    border: 1px solid rgb(211, 203, 245);
+    border: 1.5px solid rgba(255, 255, 255, 0);
+    box-shadow: 0px 0px 1.5px rgb(213, 204, 255);
     color: #E8EAED;
     outline: none;
 }
