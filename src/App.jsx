@@ -55,13 +55,13 @@ function Todomanager ({todos,setTodos,filter,setFilter,urgencies,sort,setSort}) 
       <button onClick={() => addhandler()}>追加</button>
     </div>
     <div>
-      <input type="radio" value="all" name="filter" checked={filter === "all"} onChange={() => setFilter("all")}/> 全て
-      <input type="radio" value="uncompleted" name="filter" checked={filter === "uncompleted"} onChange={() => setFilter("uncompleted")}/> 未達成
-      <input type="radio" value="completed" name="filter" checked={filter === "completed"} onChange={() => setFilter("completed")}/> 達成済
+      <label><input type="radio" value="all" name="filter" checked={filter === "all"} onChange={() => setFilter("all")}/> 全て</label>
+      <label><input type="radio" value="uncompleted" name="filter" checked={filter === "uncompleted"} onChange={() => setFilter("uncompleted")}/> 未達成</label>
+      <label><input type="radio" value="completed" name="filter" checked={filter === "completed"} onChange={() => setFilter("completed")}/> 達成済</label>
     </div>
     <div>
-      <input type="radio" name="sort" value="time" checked={sort === "time"} onChange={() => setSort("time")} />時間順
-      <input type="radio" name="sort" value="urgency" checked={sort === "urgency"} onChange={() => setSort("urgency")} />緊急度順
+      <label><input type="radio" name="sort" value="time" checked={sort === "time"} onChange={() => setSort("time")} />時間順</label>
+      <label><input type="radio" name="sort" value="urgency" checked={sort === "urgency"} onChange={() => setSort("urgency")} />緊急度順</label>
     </div>
     <div>
       <button onClick={() => deleteCompleted()}>達成済を削除</button>
