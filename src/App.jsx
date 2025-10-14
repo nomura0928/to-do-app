@@ -52,7 +52,7 @@ function Todomanager ({todos,setTodos,filter,setFilter,urgencies,sort,setSort}) 
         if (e.key === "Enter") addhandler();
       }}/>
       <button onClick={() => setUrgencynum((urgencyNum + 1)%3)} className={`urgency ${urgencies[urgencyNum].urgency}`}>{urgencies[urgencyNum].display}</button>
-      <button onClick={() => addhandler()}>追加</button>
+      <button onClick={() => addhandler()} className='add'>追加</button>
     </div>
     <div>
       <label><input type="radio" value="all" name="filter" checked={filter === "all"} onChange={() => setFilter("all")}/> 全て</label>

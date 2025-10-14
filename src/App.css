@@ -54,3 +54,13 @@ button.high {
         background-color: #ff1744;
     }
 }
+
+.add {
+    background-color: #5c3fde;
+}
+
+@media (hover: hover) {
+    .add:hover {
+        background-color: #472bc5;
+    }
+}
