@@ -16,6 +16,47 @@ input:focus {
     border: 1.5px solid rgb(138, 138, 248);
 }
 
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgb(120, 120, 130);
+    border-radius: 50%;
+    outline: none;
+    margin: auto;
+    margin-bottom: 2.5px;
+    position: relative;
+    transition: all 0.2s ease;
+    vertical-align: middle;
+}
+
+/* ホバー対応デバイスでのみ hover を適用 */
+@media (hover: hover) {
+    input[type="radio"]:hover {
+        border-color: rgb(138, 138, 248);
+        transform: scale(1.05);
+    }
+}
+
+/* 選択時の内側の点 */
+input[type="radio"]:checked::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgb(138, 138, 248);
+}
+
+label {
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
 button {
     background-color: rgb(55, 53, 65);
     color: #E8EAED;
