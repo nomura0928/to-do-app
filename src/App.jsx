@@ -64,8 +64,8 @@ function Todomanager ({todos,setTodos,filter,setFilter,urgencies,sort,setSort}) 
       <label><input type="radio" name="sort" value="urgency" checked={sort === "urgency"} onChange={() => setSort("urgency")} />緊急度順</label>
     </div>
     <div>
-      <button onClick={() => deleteCompleted()}>達成済を削除</button>
-      <button onClick={() => setTodos([])}>全て削除</button>
+      <button onClick={() => deleteCompleted()} className="delete-completed">達成済を削除</button>
+      <button onClick={() => setTodos([])} className="delete-all">全て削除</button>
     </div>
     </>
   )
@@ -129,7 +129,7 @@ function Todo ({todo,updateTodos,deletehandle,urgencies}) {
     content =<span>
       <input type="text" value={newtitle} onChange={(e) => setNewtitle(e.target.value)} />
       <button onClick={() => setUrgencynum((urgencyNum + 1)%3)} className={`urgency ${urgencies[urgencyNum].urgency}`}>{urgencies[urgencyNum].display}</button>
-      <button onClick={() => updateTodos(todo.id,newtitle,todo.completed,!todo.editnow,urgencies[urgencyNum].urgency)}>修正</button>
+      <button onClick={() => updateTodos(todo.id,newtitle,todo.completed,!todo.editnow,urgencies[urgencyNum].urgency)} className='edit'>修正</button>
      </span>;
   } else {
     content = <span>
@@ -138,8 +138,8 @@ function Todo ({todo,updateTodos,deletehandle,urgencies}) {
               {todo.title}
       </span>
       <span>{new Date(todo.createdat).toLocaleDateString()}</span>
-      <button onClick={() => updateTodos(todo.id,newtitle,todo.completed,!todo.editnow,urgencies[urgencyNum].urgency)}>編集</button>
-      <button onClick={() => deletehandle(todo.id)}>削除</button>
+      <button onClick={() => updateTodos(todo.id,newtitle,todo.completed,!todo.editnow,urgencies[urgencyNum].urgency)} className="edit">編集</button>
+      <button onClick={() => deletehandle(todo.id)} className="delete-item">削除</button>
       </span>
   }
 

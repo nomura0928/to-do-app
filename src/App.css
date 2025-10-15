@@ -56,11 +56,58 @@ button.high {
 }
 
 .add {
-    background-color: #5c3fde;
+    background-color: #3784dc;
 }
 
 @media (hover: hover) {
     .add:hover {
-        background-color: #472bc5;
+        background-color: #2181ef;
+    }
+}
+
+/* 編集・修正ボタン - グレー系 */
+.edit {
+    background-color: #666;
+    color: white;
+    border: 1px solid #555;
+}
+
+/* 削除ボタン - 赤系 */
+.delete-item {
+    background-color: #dc2626;
+    color: white;
+    border: 1px solid #b91c1c;
+}
+
+/* 達成済削除 - 優しいオレンジ系 */
+.delete-completed {
+    background-color: #f57a1b;
+    color: white;
+    border: 1px solid #e67e22;
+}
+
+/* 全削除 - 最も危険な濃い赤（元の達成済削除の色） */
+.delete-all {
+    background-color: #c53030;
+    color: white;
+    border: 1px solid #9b2c2c;
+}
+
+/* ホバー効果 */
+@media (hover: hover) {
+    .edit:hover {
+        background-color: #777;
+    }
+
+    .delete-item:hover {
+        background-color: #b91c1c;
+    }
+
+    .delete-completed:hover {
+        background-color: #c66510;
+    }
+
+    .delete-all:hover {
+        background-color: #9b2c2c;
     }
 }
